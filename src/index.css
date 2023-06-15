@@ -1,0 +1,56 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  /* background: none !important ; */
+  /* background-color: white; */
+  background-image: url('./assets/christmas-1911637_1280.jpg') !important ;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  height: 100vh;
+}
+
+.container {
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
+
+}
+
+.list {
+  padding-top: 10px;
+}
+
+ul {
+  list-style: none;
+}
+
+.containerLi{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+li{
+  padding-right: 5px;
+}
+
+.containerForm {}
+
