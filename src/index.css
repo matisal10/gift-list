@@ -18,17 +18,33 @@
 body {
   /* background: none !important ; */
   /* background-color: white; */
-  background-image: url('./assets/christmas-1911637_1280.jpg') !important ;
+  background-image: url('./assets/christmas-1911637_1280.jpg') !important;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   height: 100vh;
 }
 
 .container {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  padding: 40px;
   background-color: white;
   border-radius: 10px;
+  text-align: left;
+  width: 400px;
+  justify-content: space-evenly;
 
+}
+
+.form {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-around;
 }
 
 .list {
@@ -39,12 +55,12 @@ ul {
   list-style: none;
 }
 
-.itemList{
+.itemList {
   display: flex;
   align-items: center;
 }
 
-.containerLi{
+.containerLi {
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -53,9 +69,14 @@ ul {
   justify-content: space-between;
 }
 
-li{
+li {
   padding-right: 5px;
 }
 
 .containerForm {}
 
+@media (max-width: 438px){
+  .container{
+    width: 350px;
+  }
+}
