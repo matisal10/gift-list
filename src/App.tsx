@@ -17,6 +17,39 @@ import {
 } from '@chakra-ui/react'
 import { Text } from '@chakra-ui/react'
 
+const giftNames = [
+  'Camiseta',
+  'Libro',
+  'Flores',
+  'Perfume',
+  'Reloj',
+  'Bolso',
+  'Juego de mesa',
+  'Taza',
+  'Peluche',
+  'Gafas de sol',
+  'Joyas',
+  'Pañuelo',
+  'Cartera',
+  'Zapatillas',
+  'Lámpara',
+  'Agenda',
+  'Bufanda',
+  'Maquillaje',
+  'Botella de vino',
+  'Altavoz Bluetooth',
+  'Auriculares',
+  'Portátil',
+  'Tablet',
+  'Batería externa',
+  'Videojuego',
+  'Cámara',
+  'Póster',
+  'Sudadera',
+  'Pantalones',
+  'Calcetines',
+];
+
 function App() {
   const initialItems = () => {
     const items = localStorage.getItem('items')
@@ -78,9 +111,14 @@ function App() {
       setLink("");
       setQuantity(1);
       setReceiver("");
-      setEditingIndex(null); // Re
+      setEditingIndex(null);
     }
   }
+
+  const getRandomGiftName = () => {
+    const randomIndex = Math.floor(Math.random() * giftNames.length);
+    setGift(giftNames[randomIndex]);
+  };
 
   const addGift = () => {
     if (gift.trim() !== "") {
@@ -125,13 +163,16 @@ function App() {
               <ModalCloseButton />
               <ModalBody>
                 <form className='form'>
-                  <Input style={{ marginBottom: '10px' }} htmlSize={15} width='auto' type="text" value={gift}
-                    placeholder='Remera'
-                    onChange={(e) => setGift(e.target.value)} />
+                  <div style={{ display: 'flex' }}>
+                    <Input style={{ marginBottom: '10px', marginRight:'5px'}} htmlSize={15} width='auto' type="text" value={gift}
+                      placeholder='Remera'
+                      onChange={(e) => setGift(e.target.value)} />
+                    <Button onClick={getRandomGiftName}>Sorprendeme!</Button>
+                  </div>
                   <Input style={{ marginBottom: '10px' }} htmlSize={15} width='auto' type="text" value={link}
                     placeholder='https://image...'
                     onChange={(e) => setLink(e.target.value)} />
-                  <NumberInput size='md' style={{ marginBottom: '10px' }} maxW='200px' defaultValue={quantity} min={1} onChange={(_, value) => setQuantity(value)}>
+                  <NumberInput size='md' style={{ marginBottom: '10px' }} maxW='320px' defaultValue={quantity} min={1} onChange={(_, value) => setQuantity(value)}>
                     <NumberInputField />
                     <NumberInputStepper>
                       <NumberIncrementStepper />
@@ -142,7 +183,7 @@ function App() {
                     placeholder='Destinatario'
                     onChange={(e) => setReceiver(e.target.value)} />
                   {
-                    edited ? <Button colorScheme='orange' style={{ marginLeft: '5px' }} onClick={()=>{editGitf(),onClose()}}>Editar</Button>
+                    edited ? <Button colorScheme='orange' style={{ marginLeft: '5px' }} onClick={() => { editGitf(), onClose() }}>Editar</Button>
                       :
                       <Button colorScheme='orange' style={{ marginLeft: '5px' }} onClick={addGift}>Agregar</Button>
                   }
@@ -173,7 +214,7 @@ function App() {
                           <Text fontSize='md'>{item.receiver}</Text>
                         </div>
                       </li>
-                      <Button colorScheme='orange' size='xs' onClick={() => { editItem(item,index), onOpen() }}>E</Button>
+                      <Button colorScheme='orange' size='xs' onClick={() => { editItem(item, index), onOpen() }}>E</Button>
                       <Button colorScheme='orange' size='xs' onClick={() => deleteItem(index)}>X</Button>
                     </div>
                   ))
