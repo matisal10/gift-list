@@ -54,12 +54,6 @@ body {
 ul {
   list-style: none;
 }
-
-.itemList {
-  display: flex;
-  align-items: center;
-}
-
 .containerLi {
   display: flex;
   align-items: center;
@@ -67,6 +61,11 @@ ul {
   justify-content: center;
   padding: 10px;
   justify-content: space-between;
+}
+
+.itemList {
+  display: flex;
+  align-items: center;
 }
 
 li {
