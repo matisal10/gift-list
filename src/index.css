@@ -54,6 +54,7 @@ body {
 ul {
   list-style: none;
 }
+
 .containerLi {
   display: flex;
   align-items: center;
@@ -74,8 +75,18 @@ li {
 
 .containerForm {}
 
-@media (max-width: 438px){
-  .container{
+.line-2 {
+  border-top: 1px solid #8d8d8d;
+}
+
+.containerTotal {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0px;
+}
+
+@media (max-width: 438px) {
+  .container {
     width: 350px;
   }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './index.css'
-import { Button, useDisclosure } from '@chakra-ui/react'
+import { Button, Toast, useDisclosure } from '@chakra-ui/react'
 import { Input } from '@chakra-ui/react'
 import { Heading } from '@chakra-ui/react'
 import { Highlight } from '@chakra-ui/react'
@@ -71,10 +71,13 @@ function App() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [edited, setEdited] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [price, setPrice] = useState<number>(0)
+  const [total, setTotal] = useState<number>(0)
 
   useEffect(() => {
-    if (items.length != 0) {
+    if (items.length !== 0) {
       localStorage.setItem('items', JSON.stringify(items));
+      calculateTotal(items); // Calcular el total al actualizar los elementos
     }
   }, [items]);
 
@@ -85,6 +88,7 @@ function App() {
 
   const deleteAll = () => {
     setItems([])
+    setTotal(0);
   }
 
   const editItem = (item: any, index: any) => {
@@ -94,6 +98,7 @@ function App() {
     setQuantity(item.quantity)
     setReceiver(item.receiver)
     setEditingIndex(index);
+    setPrice(item.price)
   }
 
   const editGitf = () => {
@@ -104,6 +109,7 @@ function App() {
         link: link,
         quantity: quantity,
         receiver: receiver,
+        price: price
       };
       setItems(updatedItems);
       setEdited(false);
@@ -111,7 +117,9 @@ function App() {
       setLink("");
       setQuantity(1);
       setReceiver("");
+      setPrice(0);
       setEditingIndex(null);
+      calculateTotal(updatedItems[editingIndex].quantity * updatedItems[editingIndex].price);
     }
   }
 
@@ -137,25 +145,38 @@ function App() {
         setGift("");
         setQuantity(1);
         setReceiver('')
+        setPrice(0);
         setError("");
+        calculateTotal(existingItem.quantity * existingItem.price);
       } else {
-        const newItem = { gift: gift, link: link, quantity: quantity, receiver: receiver };
+        const newItem = { gift: gift, link: link, quantity: quantity, receiver: receiver, price: price };
         setItems([...items, newItem]);
         setGift("");
         setLink('')
         setReceiver('')
         setQuantity(1);
+        setPrice(0);
         setError("");
+        calculateTotal(newItem.quantity * newItem.price);
       }
     } else {
       setError("El regalo no puede estar vacío");
     }
   };
+
+  const calculateTotal = (total: number) => {
+    const newTotal = items.reduce((total: number, item: any) => total + item.quantity * item.price, 0);
+    setTotal(newTotal);
+  }
+
+
   return (
     <>
       <div className="App">
         <div className='container'>
-          <Heading as='h1' size='xl' noOfLines={1}>Regalos:</Heading>
+          <div>
+            <Heading as='h1' size='xl' noOfLines={1}>Regalos:</Heading>
+          </div>
           <Button onClick={onOpen} style={{ marginTop: '10px' }} colorScheme='orange'>Agregar Regalo</Button>
           <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -164,7 +185,7 @@ function App() {
               <ModalBody>
                 <form className='form'>
                   <div style={{ display: 'flex' }}>
-                    <Input style={{ marginBottom: '10px', marginRight:'5px'}} htmlSize={15} width='auto' type="text" value={gift}
+                    <Input style={{ marginBottom: '10px', marginRight: '5px' }} htmlSize={15} width='auto' type="text" value={gift}
                       placeholder='Remera'
                       onChange={(e) => setGift(e.target.value)} />
                     <Button onClick={getRandomGiftName}>Sorprendeme!</Button>
@@ -172,6 +193,9 @@ function App() {
                   <Input style={{ marginBottom: '10px' }} htmlSize={15} width='auto' type="text" value={link}
                     placeholder='https://image...'
                     onChange={(e) => setLink(e.target.value)} />
+                  <Input style={{ marginBottom: '10px' }} htmlSize={15} width='auto' type="number" value={price}
+                    placeholder='3000'
+                    onChange={(e) => setPrice(parseInt(e.target.value))} />
                   <NumberInput size='md' style={{ marginBottom: '10px' }} maxW='320px' defaultValue={quantity} min={1} onChange={(_, value) => setQuantity(value)}>
                     <NumberInputField />
                     <NumberInputStepper>
@@ -210,7 +234,7 @@ function App() {
                       <li className='itemList'>
                         <Image src={item.link} fallbackSrc='https://via.placeholder.com/40' alt='Imagen regalo' boxSize='40px' objectFit='cover' style={{ paddingRight: '5px' }} />
                         <div style={{ width: '180px' }}>
-                          <Text fontSize='lg' as='b'>{item.gift}</Text> X{item.quantity}
+                          <Text fontSize='lg' as='b'>{item.gift}</Text> X{item.quantity} - ${(item.quantity * item.price)}
                           <Text fontSize='md'>{item.receiver}</Text>
                         </div>
                       </li>
@@ -225,10 +249,14 @@ function App() {
                 <Highlight query='Agrega algo!' styles={{ px: '1', py: '1', bg: 'orange.100', rounded: 'full' }}>
                   No hay regalos grinch! Agrega algo!
                 </Highlight>
-
               </div>
             }
           </div>
+          <div className="line-2"></div>
+          <div className='containerTotal'>
+            <Text fontSize='md' as='b'>Total: ${total}</Text>
+          </div>
+          <div className="line-2" style={{ paddingBottom: '10px' }}></div>
           <Button colorScheme='orange' onClick={deleteAll}>Eliminar Todo</Button>
         </div>
       </div>
