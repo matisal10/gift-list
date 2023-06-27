@@ -33,7 +33,7 @@ body {
   background-color: white;
   border-radius: 10px;
   text-align: left;
-  width: 400px;
+  width: 430px;
   justify-content: space-evenly;
 
 }
@@ -55,6 +55,7 @@ ul {
   list-style: none;
 }
 
+
 .containerLi {
   display: flex;
   align-items: center;
@@ -62,6 +63,16 @@ ul {
   justify-content: center;
   padding: 10px;
   justify-content: space-between;
+}
+
+.listPrev{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+  justify-content: space-between;
+  border-top: 1px solid #8d8d8d;
 }
 
 .itemList {
@@ -88,5 +99,11 @@ li {
 @media (max-width: 438px) {
   .container {
     width: 350px;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none;
   }
 }
