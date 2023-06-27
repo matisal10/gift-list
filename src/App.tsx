@@ -309,9 +309,9 @@ function App() {
                           <Text fontSize='md'>{item.receiver}</Text>
                         </div>
                       </li>
-                      <Button colorScheme='orange' size='xs' onClick={() => { editItem(item, index), onOpen() }}>E</Button>
-                      <Button colorScheme='orange' size='xs' onClick={() => { duplicated(item), onOpen() }}>D</Button>
-                      <Button colorScheme='orange' size='xs' onClick={() => deleteItem(index)}>X</Button>
+                      <Button className='btn' colorScheme='orange' size='xs' onClick={() => { editItem(item, index), onOpen() }}>E</Button>
+                      <Button className='btn' colorScheme='orange' size='xs' onClick={() => { duplicated(item), onOpen() }}>D</Button>
+                      <Button className='btn' colorScheme='orange' size='xs' onClick={() => deleteItem(index)}>X</Button>
                     </div>
                   ))
                 }
